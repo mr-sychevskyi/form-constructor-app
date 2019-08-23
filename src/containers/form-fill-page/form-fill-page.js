@@ -13,7 +13,7 @@ class FormFillPage extends Component {
   };
 
   componentDidMount() {
-    // this.props.setRole('guest');
+    this.props.setRole('guest');
     this.props.fillPage.fields.forEach(item => this.handleChangeDataState(
       item.name,
       item.defaultOption || item.checked
