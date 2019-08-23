@@ -32,21 +32,6 @@ export const initialState = {
         }
       ]
     },
-    {
-      id: 1331,
-      fills: [
-        {
-          id: 32663,
-          fields: {
-            Company: 'F&F',
-            'The number of employees': '100-400',
-            'Business type': 'proprietorship',
-            Email: 'ffcompany@example.com',
-            'Your questions': 'Our company want to work with you',
-          }
-        },
-      ]
-    }
   ]
 };
 

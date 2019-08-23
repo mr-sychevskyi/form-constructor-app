@@ -28,7 +28,7 @@ const FormsView = ({ forms, fillsCountList, currCopiedId, handleCopied }) => (
                   </div>
 
                   <div className="forms-list-controls">
-                    <Link className="forms-list-text" to={`/forms/active/${form.id}`}>Link to fill</Link>
+                    {/* <Link className="forms-list-text" to={`/forms/active/${form.id}`}>Link to fill</Link> */}
 
                     {!fillsCountList[form.id] && (
                       <Link className="btn btn-link" to={`/forms/${form.id}`} title="Edit form" replace>
@@ -37,7 +37,7 @@ const FormsView = ({ forms, fillsCountList, currCopiedId, handleCopied }) => (
                     )}
 
                     <CopyToClipboard
-                      text={`${window.location.host}/forms/active/${form.id}`}
+                      text={`${window.location.host}/#/forms/active/${form.id}`}
                       onCopy={() => handleCopied(form.id)}
                     >
                       <button className="btn btn-link btn-clipboard" type="button">
