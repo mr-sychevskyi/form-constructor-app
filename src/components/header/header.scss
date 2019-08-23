@@ -1,0 +1,35 @@
+@import 'src/assets/styles/variables';
+
+$header-color: #FAFAFA;
+$header-bg-color: #2D626D;
+$header-shadow-color: rgba(0, 0, 0, 0.5);
+
+$z-index-header: 10;
+
+.header {
+  padding: 10px 40px;
+
+  background-color: $color-primary;
+  box-shadow: 0 3px 6px 0 $header-shadow-color;
+  z-index: $z-index-header;
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 1.8rem;
+    text-transform: uppercase;
+
+    color: $header-color;
+  }
+
+  &-logo {
+    display: flex;
+
+    .icon {
+      color: $header-color;
+      font-size: 3rem;
+    }
+  }
+}

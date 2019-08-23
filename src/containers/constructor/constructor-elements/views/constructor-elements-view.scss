@@ -1,0 +1,43 @@
+@import 'src/assets/styles/variables';
+
+.form-elements {
+  &-title {
+    font-size: 20px;
+    padding: 20px;
+  }
+}
+
+.list-item {
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px;
+    transition: background-color .3s ease-out;
+
+    &__text {
+      //font-size: 18px;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    &:hover {
+      background-color: rgba(144,164,174,0.1);
+
+      .list-item-icon {
+        opacity: 1;
+      }
+    }
+  }
+
+  &-info * {
+    line-height: 30px;
+    vertical-align: middle;
+  }
+
+  &-icon {
+    opacity: 0;
+    transition: opacity .3s ease-out;
+  }
+}

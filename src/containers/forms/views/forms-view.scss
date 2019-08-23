@@ -1,0 +1,93 @@
+@import 'src/assets/styles/variables';
+
+.forms-list {
+  margin-bottom: 40px;
+  box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16);
+  background-color: #fff;
+  border: 1px solid #ccc;
+
+  &-title {
+    margin-bottom: 20px;
+  }
+
+  &-item:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+  }
+
+  .form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px;
+    color: $color-font-dark;
+  }
+
+  &-text {
+    display: inline-block;
+    padding: 0 10px;
+  }
+
+  &-name {
+    min-width: 250px;
+  }
+
+  &-bx {
+    min-width: 80px;
+    border-left: 2px solid #ccc;
+  }
+
+  &-info {
+    border-right: 2px solid #ccc;
+  }
+
+  &-controls {
+    padding: 0 10px;
+
+    * {
+      vertical-align: middle;
+      line-height: 25px;
+    }
+  }
+}
+
+.arrow-down {
+  margin-bottom: 15px;
+  font-size: 24px;
+  text-align: center;
+  color: rgba(50, 50, 50, 0.8);
+}
+
+.btn-link {
+  padding: 0 10px;
+  color: #a5787a;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.btn-clipboard {
+  * {
+    line-height: 20px;
+    vertical-align: bottom;
+  }
+
+  .btn__text {
+    transition: color .25s ease-in;
+  }
+
+  .btn__icon {
+    color: $color-font-dark;
+    opacity: 0;
+    transition: opacity .25s ease-in;
+  }
+
+  .btn__icon.copied {
+    opacity: 1
+  }
+
+  &:hover {
+    .btn__text {
+      color: $color-font-dark;
+    }
+  }
+}

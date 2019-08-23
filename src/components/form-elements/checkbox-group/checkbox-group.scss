@@ -1,0 +1,12 @@
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+
+  .form-group__label {
+    width: 100%;
+  }
+
+  &.disabled {
+    opacity: .8;
+  }
+}

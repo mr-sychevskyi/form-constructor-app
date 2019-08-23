@@ -1,0 +1,20 @@
+@import 'src/assets/styles/variables';
+
+.form-group {
+  &__textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    resize: none;
+    border: none;
+    border-radius: 4px;
+    background-color: #E7E4E1;
+  }
+
+  &__textarea::placeholder {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #3b475a;
+    letter-spacing: normal;
+  }
+}

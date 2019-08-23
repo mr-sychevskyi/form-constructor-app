@@ -1,0 +1,95 @@
+html,
+body {
+  height: 100%;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none !important;
+}
+
+a:hover,
+button:hover {
+  cursor: pointer;
+}
+
+a,
+button,
+button:hover,
+button:focus,
+button:active,
+label,
+input,
+select,
+textarea {
+  outline: none;
+}
+
+button {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+button[disabled],
+button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.img-responsive {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.scroll-disabled {
+  overflow-y: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.container-fluid {
+  width: 100%;
+  margin: 0 auto;
+}
+
+#root {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main {
+  flex-grow: 1;
+  padding: 40px 0;
+  background-color: #fafafa;
+}
+
+.info-title {
+  text-align: center;
+  color: lightseagreen;
+}
+
+.m-5 {
+  margin: 25px;
+}
+
+.btn {
+  .btn__icon + .btn__text,
+  .btn__text + .btn__icon {
+    margin-left: 10px;
+  }
+}

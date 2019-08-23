@@ -1,0 +1,59 @@
+.form-fills {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: separate;
+  border-spacing: 0 2px;
+
+  .thead .tr {
+    background-color: #68879e;
+    white-space: nowrap;
+  }
+
+  .tr {
+    position: relative;
+    background-color: #dfe2e8;
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .tr:nth-child(even) {
+    background-color: #dfe2e8;
+  }
+
+  .th,
+  .td {
+    text-align: left;
+  }
+
+  .th {
+    padding: 25px 10px;
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #FFF;
+  }
+
+  .td {
+    position: relative;
+    padding: 20px 10px;
+    font-size: 18px;
+    color: #646464;
+  }
+
+  .tr .th:first-child,
+  .tr .td:first-child {
+    padding-left: 40px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+
+  .tr .th:last-child,
+  .tr .td:last-child {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+
+  .tr:hover .td {
+    color: #fff;
+  }
+}
+
