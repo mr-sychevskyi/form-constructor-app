@@ -23,8 +23,10 @@ const FormsView = ({ forms, fillsCountList, currCopiedId, handleCopied }) => (
                     <span className="forms-list-text forms-list-bx">Fields: {form.fields.length}</span>
                     <span className="forms-list-text forms-list-bx">
                       <span>Fills: {fillsCountList[form.id] || 0}</span>
-                      <Link className="btn btn-link" to={`/fills/${form.id}`} replace>View fills</Link>
                     </span>
+                    {fillsCountList[form.id] &&
+                      <Link className="btn btn-link" to={`/fills/${form.id}`} replace>View fills</Link>
+                    }
                   </div>
 
                   <div className="forms-list-controls">

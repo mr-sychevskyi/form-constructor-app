@@ -33,12 +33,12 @@
   }
 
   &-bx {
-    min-width: 80px;
+    min-width: 75px;
     border-left: 2px solid #ccc;
-  }
 
-  &-info {
-    border-right: 2px solid #ccc;
+    &:last-of-type {
+      border-right: 2px solid #ccc;
+    }
   }
 
   &-controls {
@@ -61,8 +61,12 @@
 .btn-link {
   padding: 0 10px;
   color: #a5787a;
-  font-size: 14px;
-  text-transform: uppercase;
+    font-size: 14px;
+    text-transform: uppercase;
+
+    &:hover {
+      color: #7d5355;
+  }
 }
 
 .btn-clipboard {
@@ -83,11 +87,5 @@
 
   .btn__icon.copied {
     opacity: 1
-  }
-
-  &:hover {
-    .btn__text {
-      color: $color-font-dark;
-    }
   }
 }
