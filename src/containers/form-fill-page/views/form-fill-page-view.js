@@ -1,27 +1,28 @@
 import React from 'react';
 
+import { getOptionName } from 'utils';
 import FormElementsLibrary from 'containers/constructor/constructor-body/constructor-body-constants';
 import './form-fill-page-view.scss';
 
 const FormFillPageView = ({
-  data, fillPage, successful, formFillsCount, resetForm, handleChange,
+  data, fillPage, successful, formFillsTotal, resetForm, handleChange,
   handleToggleData, addFill, updateFill, toggleValue
 }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    const nData = fillPage.fields
+    const fieldsData = fillPage.fields
       .reduce((res, field) => ({
         ...res,
         [field.label]: field.options
-          ? field.options.filter(item => item.value === data[field.name]).name
+          ? getOptionName(field.options, data[field.name])
           : data[field.name]
       }), {});
 
-    const action = formFillsCount ? updateFill : addFill;
+    const action = formFillsTotal ? updateFill : addFill;
     const fillData = {
       id: fillPage.id,
-      fields: nData
+      fields: fieldsData
     };
 
     action(fillData);
