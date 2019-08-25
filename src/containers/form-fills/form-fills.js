@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import FormFillsView from 'containers/form-fills/views/form-fills-view';
 import { getFormFills } from 'reducers/fills';
+import FormFillsView from './views/form-fills-view';
 
 class FormFills extends Component {
   render() {
