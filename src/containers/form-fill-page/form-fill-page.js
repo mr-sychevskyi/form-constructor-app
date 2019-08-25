@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getCurrForm } from 'reducers/forms';
-import { addFill, updateFill, getFormFillsCount } from 'reducers/fills';
+import { makeGetCurrForm } from 'reducers/forms';
+import { addFill, updateFill, getFormFillsTotal } from 'reducers/fills';
 import { setRole } from 'reducers/auth';
 import FormFillPageView from './views/form-fill-page-view';
 
@@ -64,11 +64,17 @@ class FormFillPage extends Component {
   }
 }
 
-const enhance = connect(
-  (state, props) => ({
+const makeMapStateToProps = () => {
+  const getCurrForm = makeGetCurrForm();
+
+  return (state, props) => ({
     fillPage: getCurrForm(state, props),
-    formFillsCount: getFormFillsCount(state, props),
-  }),
+    formFillsTotal: getFormFillsTotal(state, props),
+  });
+};
+
+const enhance = connect(
+  makeMapStateToProps,
   {
     addFill,
     updateFill,

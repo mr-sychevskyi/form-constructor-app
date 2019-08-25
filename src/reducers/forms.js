@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-// import { createSelector } from 'reselect';
+import { createSelector } from 'reselect';
 
 // ACTION CREATORS
 export const addForm = createAction('FORMS::ADD');
@@ -118,7 +118,7 @@ export const initialState = {
       ]
     }
   ],
-  isLoading: false
+  isLoading: false,
 };
 
 export default handleActions(
@@ -144,16 +144,9 @@ export default handleActions(
 
 // SELECTORS
 export const getForms = state => state.forms.data;
+export const currFormId = (state, props) => +props.match.params.id;
 
-export const getCurrForm = (state, props) => {
-  const forms = getForms(state);
-  const currFormId = +props.match.params.id;
-
-  return forms.filter(form => form.id === currFormId)[0];
-};
-
-// export const getCurrForm = createSelector(
-//   getForms,
-//   currFormId(props),
-//   forms => forms.filter(form => form.id === currFormId)[0],
-// );
+export const makeGetCurrForm = () => createSelector(
+  [getForms, currFormId],
+  (forms, id) => forms.filter(form => form.id === id)[0],
+);

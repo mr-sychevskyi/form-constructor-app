@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { uniqueId } from 'utils';
-import { getCurrForm } from 'reducers/forms';
+import { makeGetCurrForm } from 'reducers/forms';
 import {
   addToConstructor, resetConstructorData, updateConstructor, getConstructorElements,
 } from 'reducers/constructor';
@@ -104,13 +104,17 @@ class Constructor extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  constructorBody: getConstructorElements(state),
-  currForm: getCurrForm(state, props),
-});
+const makeMapStateToProps = () => {
+  const getCurrForm = makeGetCurrForm();
+
+  return (state, props) => ({
+    constructorBody: getConstructorElements(state),
+    currForm: getCurrForm(state, props),
+  });
+};
 
 const enhance = connect(
-  mapStateToProps,
+  makeMapStateToProps,
   {
     addToConstructor,
     updateConstructor,
