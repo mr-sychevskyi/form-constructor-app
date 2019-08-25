@@ -1,18 +1,22 @@
+@import 'src/assets/styles/variables';
+
 .form-el-config {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 200;
 
   width: 700px;
   max-width: 100%;
+  max-height: 100%;
   padding: 25px;
 
   background-color: #FAFAFA;
   border: 1px solid #EEE;
   border-radius: 4px;
   box-shadow: 0 0 10px 2px rgba(100, 100, 100, .7);
-  z-index: 200;
+  overflow-y: scroll;
 
   .form-group {
     height: 70px;
@@ -50,22 +54,28 @@
 
 .form-group-list {
   position: relative;
-  height: 160px;
+  height: 180px;
+  padding: 10px;
   margin-bottom: 20px;
 
   overflow-y: scroll;
-  border: 1px solid darkslategray;
-  border-radius: 5px;
+  border-top: 1px solid darkslategray;
+  border-bottom: 1px solid darkslategray;
 
   &-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 8px 20px;
 
     text-align: center;
-    text-transform: capitalize;
+    background-color: #d6d0cb;
     border-bottom: 1px solid #c5cbd6;
+    border-radius: 25px;
+  }
+
+  &-item:not(:last-of-type) {
+    margin-bottom: 8px;
   }
 }
 

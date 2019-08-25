@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { uniqueId } from 'lodash';
 import { Header } from 'components';
 
 import './form-fills-view.scss';
@@ -17,19 +16,18 @@ const FormFillsView = ({ fills }) => (
             <table className="fills form-fills">
               <thead className="thead">
                 <tr className="tr">
-                  {Object.keys(fills[0].fields).map(item => (
-                    <th key={uniqueId()} className="th">{item}</th>
+                  {Object.keys(fills[0].fields).map((item, index) => (
+                    <th key={index} className="th">{item}</th>
                   ))}
                 </tr>
               </thead>
               <tbody className="tbody">
                 {fills.map(fill => (
-                  <tr key={uniqueId()} className="tr">
-                    {Object.values(fill.fields).map(item => (
-                      <td key={uniqueId()} className="td">
-                        {item === true && 'true'}
-                        {item === false && 'false'}
-                        {item}
+                  <tr key={fill.id} className="tr">
+                    {Object.values(fill.fields).map((item, index) => (
+                      <td key={index} className="td">
+                        {item === true && 'true' || item === false && 'false'}
+                        {item ? item : item !== false && '―'}
                       </td>
                     ))}
                   </tr>
