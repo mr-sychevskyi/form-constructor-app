@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 import { createSelector } from 'reselect';
-import { uniqueId } from 'lodash';
+import { uniqueId } from 'utils';
 
 // ACTION CREATORS
 export const addFill = createAction('FILL::ADD');
@@ -74,25 +74,24 @@ export default handleActions(
 );
 
 // SELECTORS
-export const getFills = state => state.fills.data || [];
+export const getFills = state => state.fills.data;
+export const currFormId = (state, props) => +props.match.params.id;
 
-export const getFormFills = (state, props) => {
-  const fills = getFills(state);
-  const currFormId = +props.match.params.id;
-  const currFormFills = fills.filter(form => form.id === currFormId);
+export const getFormFills = createSelector(
+  [getFills, currFormId],
+  (fills, id) => {
+    const currFormFills = fills.filter(form => form.id === id);
 
-  return currFormFills.length ? currFormFills[0].fills : [];
-};
+    return currFormFills.length ? currFormFills[0].fills : [];
+  }
+);
 
-export const getFormFillsCount = (state, props) => {
-  const fills = getFills(state);
-  const currFormId = +props.match.params.id;
-  const currFormFills = fills.filter(form => form.id === currFormId);
+export const getFormFillsTotal = createSelector(
+  getFormFills,
+  fills => fills.length
+);
 
-  return currFormFills.length;
-};
-
-export const getFillsCount = createSelector(
+export const getFormFillsTotalList = createSelector(
   getFills,
   fills => fills.reduce((res, fill) => ({
     ...res,

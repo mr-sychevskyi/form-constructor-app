@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getFillsCount } from 'reducers/fills';
+import { getFormFillsTotalList } from 'reducers/fills';
 import { getForms } from 'reducers/forms';
 import FormsView from './views/forms-view';
 
@@ -38,7 +38,7 @@ class Forms extends Component {
 
 const mapStateToProps = (state) => ({
   forms: getForms(state),
-  fillsCountList: getFillsCount(state),
+  fillsTotalList: getFormFillsTotalList(state),
 });
 
 const enhance = connect(
