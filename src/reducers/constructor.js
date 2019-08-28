@@ -2,12 +2,12 @@ import { createAction, handleActions } from 'redux-actions';
 import { createSelector } from 'reselect';
 import { uniqueId } from 'utils';
 
-// ACTION CREATORS
-export const addToConstructor = createAction('CONSTRUCTOR::ADD');
-export const updateConstructor = createAction('CONSTRUCTOR::UPDATE');
-export const updateConstructorOrder = createAction('CONSTRUCTOR_ORDER::UPDATE');
-export const removeFromConstructor = createAction('CONSTRUCTOR::REMOVE');
-export const resetConstructorData = createAction('CONSTRUCTOR::RESET');
+// ACTIONS
+export const addToConstructor = createAction('CONSTRUCTOR_ADD');
+export const updateConstructor = createAction('CONSTRUCTOR_UPDATE');
+export const updateConstructorOrder = createAction('CONSTRUCTOR_ORDER_UPDATE');
+export const removeFromConstructor = createAction('CONSTRUCTOR_REMOVE');
+export const resetConstructorData = createAction('CONSTRUCTOR_RESET');
 
 // REDUCER
 export const initialState = {
@@ -52,15 +52,15 @@ export default handleActions(
 );
 
 // SELECTORS
-export const getConstructorElements = state => state.constructor.data || [];
+export const constructorElements = state => state.constructor.data || [];
 
-export const getConstructorElementsTotal = createSelector(
-  getConstructorElements,
+export const constructorElementsTotal = createSelector(
+  constructorElements,
   elements => elements.length
 );
 
-export const getConstructorElementsNames = createSelector(
-  getConstructorElements,
+export const constructorElementsNames = createSelector(
+  constructorElements,
   fields => fields.reduce((res, field) => ({
     ...res,
     [field.id]: field.name
