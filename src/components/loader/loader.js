@@ -3,8 +3,8 @@ import React from 'react';
 import './loader.scss';
 
 const Loader = () => (
-  <div className="loader">
-    <div className="loader__circle"/>
+  <div className="progress">
+    <span className="progress__inner">Loading...</span>
   </div>
 );
 
