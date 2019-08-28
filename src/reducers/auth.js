@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 
-// ACTION CREATORS
-export const setRole = createAction('AUTH_ROLE::SET');
+// ACTION
+export const setRole = createAction('AUTH_ROLE_SET');
 
 // REDUCER
 export const initialState = {

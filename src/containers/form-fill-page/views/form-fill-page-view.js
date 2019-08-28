@@ -1,35 +1,10 @@
 import React from 'react';
 
-import { getOptionName } from 'utils';
 import FormElementsLibrary from 'containers/constructor/constructor-body/constructor-body-constants';
 import './form-fill-page-view.scss';
 
-const FormFillPageView = ({
-  data, fillPage, successful, formFillsTotal, resetForm, handleChange,
-  handleToggleData, addFill, updateFill, toggleValue
-}) => {
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    const fieldsData = fillPage.fields
-      .reduce((res, field) => ({
-        ...res,
-        [field.label]: field.options
-          ? getOptionName(field.options, data[field.name])
-          : data[field.name]
-      }), {});
-
-    const action = formFillsTotal ? updateFill : addFill;
-    const fillData = {
-      id: fillPage.id,
-      fields: fieldsData
-    };
-
-    action(fillData);
-    toggleValue('successful');
-  };
-
-  return (
+const FormFillPageView = ({ data, fillPage, successful, resetForm, handleChange, handleToggleData, handleSubmit }) => (
+  <div className="form-fill-page-wrapper">
     <div className="container">
       {successful
         ? <div className="wrapper__snackbar snackbar">Successful!</div>
@@ -56,7 +31,7 @@ const FormFillPageView = ({
           </div>
         )}
     </div>
-  );
-};
+  </div>
+);
 
 export default FormFillPageView;
