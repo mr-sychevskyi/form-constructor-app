@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getConstructorElementsNames } from 'reducers/constructor';
+import { constructorElementsNames } from 'reducers/constructor';
 import ConstructorElConfigView from './views/constructor-el-config-view';
 
 class ConstructorElConfig extends Component {
@@ -122,7 +122,7 @@ class ConstructorElConfig extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  currFormElNames: getConstructorElementsNames(state),
+  currFormElNames: constructorElementsNames(state),
 });
 
 const enhance = connect(
