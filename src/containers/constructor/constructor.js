@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { uniqueId } from 'utils';
 import { makeGetCurrForm } from 'reducers/forms';
 import {
-  addToConstructor, resetConstructorData, updateConstructor, getConstructorElements,
+  addToConstructor, resetConstructorData, updateConstructor, constructorElements,
 } from 'reducers/constructor';
 import { Header, ModalWrapper } from 'components';
 
@@ -108,7 +108,7 @@ const makeMapStateToProps = () => {
   const getCurrForm = makeGetCurrForm();
 
   return (state, props) => ({
-    constructorBody: getConstructorElements(state),
+    constructorBody: constructorElements(state),
     currForm: getCurrForm(state, props),
   });
 };

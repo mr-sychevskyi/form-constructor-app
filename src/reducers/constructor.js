@@ -52,15 +52,15 @@ export default handleActions(
 );
 
 // SELECTORS
-export const getConstructorElements = state => state.constructor.data || [];
+export const constructorElements = state => state.constructor.data || [];
 
-export const getConstructorElementsTotal = createSelector(
-  getConstructorElements,
+export const constructorElementsTotal = createSelector(
+  constructorElements,
   elements => elements.length
 );
 
-export const getConstructorElementsNames = createSelector(
-  getConstructorElements,
+export const constructorElementsNames = createSelector(
+  constructorElements,
   fields => fields.reduce((res, field) => ({
     ...res,
     [field.id]: field.name
