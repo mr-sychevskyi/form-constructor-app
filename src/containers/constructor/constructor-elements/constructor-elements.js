@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getConstructorElementsTotal } from 'reducers/constructor';
+import { constructorElementsTotal } from 'reducers/constructor';
 import ConstructorElementsView from './views/constructor-elements-view';
 import { FORM_ELEMENTS, FORM_ELEMENTS_LIMIT } from './constructor-elements-constants';
 
@@ -18,7 +18,7 @@ class ConstructorElements extends Component {
 }
 
 const mapStateToProps = state => ({
-  currFormElementsAdded: getConstructorElementsTotal(state),
+  currFormElementsAdded: constructorElementsTotal(state),
 });
 
 const enhance = connect(

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
-import { uniqueId, getOptionName } from 'utils';
+import { getOptionName } from 'utils';
 import { DragDropWrapper } from 'components';
 import {
   TYPE_ATTR_OPTIONS as typeAttrOptions
@@ -21,19 +21,18 @@ const ConstructorBodyView = ({
       (element.type
         ? {
           ...element,
-          type: element.type === 'text' ? 'text' : getOptionName(typeAttrOptions, element.type)
+          type: element.type.length > 1 ? element.type : getOptionName(typeAttrOptions, element.type)
         }
         : element)
     );
 
     const action = formId ? updateForm : addForm;
     const formData = {
-      id: formId || uniqueId(),
       name: formName,
       fields: constructorBodyData,
     };
 
-    action(formData);
+    action(formData, formId);
     handleIsFormCreated();
   };
 
