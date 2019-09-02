@@ -25,18 +25,20 @@ class DragDropWrapper extends Component {
   };
 
   render() {
+    const { children, className } = this.props;
+
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Droppable droppableId="droppable">
           {provided => (
-            <div
-              className={this.props.className}
+            <ul
+              className={className}
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {this.props.children}
+              {children}
               {provided.placeholder}
-            </div>
+            </ul>
           )}
         </Droppable>
       </DragDropContext>

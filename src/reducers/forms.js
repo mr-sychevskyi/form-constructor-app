@@ -1,159 +1,119 @@
 import { createAction, handleActions } from 'redux-actions';
-// import { createSelector } from 'reselect';
+import { createSelector } from 'reselect';
+import { api, callApi } from 'api';
 
-// ACTION CREATORS
-export const addForm = createAction('FORMS::ADD');
-export const updateForm = createAction('FORMS::UPDATE');
-export const removeForm = createAction('FORMS::REMOVE');
+// ACTIONS
+const getFormsRequest = createAction('FORMS_GET_REQUEST');
+const getFormsSuccess = createAction('FORMS_GET_SUCCESS');
+const getFormsFailure = createAction('FORMS_GET_FAILURE');
+
+const addFormRequest = createAction('FORMS_ADD_REQUEST');
+const addFormSuccess = createAction('FORMS_ADD_SUCCESS');
+const addFormFailure = createAction('FORMS_ADD_FAILURE');
+
+const updateFormRequest = createAction('FORMS_UPDATE_REQUEST');
+const updateFormSuccess = createAction('FORMS_UPDATE_SUCCESS');
+const updateFormFailure = createAction('FORMS_UPDATE_FAILURE');
+
+export const resetSuccess = createAction('FORMS_RESET_SUCCESS');
+
+// ASYNC ACTIONS
+export const getForms = () => callApi({
+  types: [getFormsRequest, getFormsSuccess, getFormsFailure],
+  action: () => api.get('forms')
+});
+
+export const addForm = data => callApi({
+  types: [addFormRequest, addFormSuccess, addFormFailure],
+  action: () => api.post('forms', data)
+});
+
+export const updateForm = (data, id) => callApi({
+  types: [updateFormRequest, updateFormSuccess, updateFormFailure],
+  action: () => api.put(`forms/${id}`, data)
+});
 
 // REDUCER
 export const initialState = {
-  data: [
-    {
-      id: 1221,
-      name: 'User Form',
-      fields: [
-        {
-          el: 'input',
-          type: 'text',
-          name: 'name',
-          label: 'Name',
-          required: true,
-          placeholder: 'Enter name here'
-        },
-        {
-          el: 'input',
-          type: 'number',
-          name: 'age',
-          label: 'Age',
-          required: false,
-          placeholder: 'Enter age here'
-        },
-        {
-          el: 'textarea',
-          name: 'about',
-          label: 'About',
-          required: false,
-          rows: 4,
-          placeholder: 'Enter about info'
-        },
-        {
-          el: 'checkbox',
-          name: 'terms_conditions',
-          label: 'Accept the Terms and Conditions',
-          checked: false,
-          icon: 'check_box'
-        }
-      ]
-    },
-    {
-      id: 1331,
-      name: 'Company Form',
-      fields: [
-        {
-          el: 'input',
-          type: 'text',
-          name: 'company',
-          label: 'Company',
-          placeholder: 'Enter company here',
-          required: true
-        },
-        {
-          el: 'select',
-          name: 'companyEmployees',
-          label: 'The number of employees',
-          placeholder: 'The number of employees',
-          options: [
-            {
-              name: '0-100',
-              value: 0
-            },
-            {
-              name: '100-400',
-              value: 1
-            },
-            {
-              name: '400-1000',
-              value: 2
-            }
-          ],
-          defaultOption: 1
-        },
-        {
-          el: 'radio',
-          name: 'businessType',
-          label: 'Business type',
-          options: [
-            {
-              name: 'corporation',
-              value: 0
-            },
-            {
-              name: 'partnership',
-              value: 1
-            },
-            {
-              name: 'proprietorship',
-              value: 2
-            }
-          ],
-          defaultOption: 1
-        },
-        {
-          el: 'input',
-          type: 'email',
-          name: 'email',
-          label: 'Email',
-          placeholder: 'Enter company email here',
-          required: true
-        },
-        {
-          el: 'textarea',
-          name: 'questions',
-          label: 'Your questions',
-          required: false,
-          rows: 4,
-          placeholder: 'Feel free to ask any questions?'
-        }
-      ]
-    }
-  ],
-  isLoading: false
+  data: [],
+  loading: false,
+  loaded: false,
+  error: null,
+  success: null,
 };
 
 export default handleActions(
   {
-    [addForm]: (state, { payload }) => ({
+    [getFormsRequest]: state => ({
       ...state,
-      data: [
-        ...state.data,
-        payload
-      ]
+      loading: true,
     }),
-    [updateForm]: (state, { payload }) => ({
+    [getFormsSuccess]: (state, { payload }) => ({
       ...state,
-      data: state.data.map(form => (form.id !== payload.id ? form : payload))
+      data: payload,
+      loading: false,
+      loaded: true,
     }),
-    [removeForm]: (state, { payload }) => ({
+    [getFormsFailure]: (state, { payload }) => ({
       ...state,
-      data: state.data.filter(form => form.id !== payload)
+      loading: false,
+      error: payload
     }),
+
+    [addFormRequest]: state => ({
+      ...state,
+      loading: true,
+    }),
+    [addFormSuccess]: (state, { type, payload }) => ({
+      ...state,
+      data: [...state.data, payload],
+      loading: false,
+      loaded: true,
+      success: type,
+    }),
+    [addFormFailure]: (state, { payload }) => ({
+      ...state,
+      loading: false,
+      error: payload
+    }),
+
+    [updateFormRequest]: state => ({
+      ...state,
+      loading: true,
+    }),
+    [updateFormSuccess]: (state, { type, payload }) => ({
+      ...state,
+      data: state.data.map(form => (
+        form._id.$oid !== payload._id.$oid
+          ? form
+          : payload
+      )),
+      loading: false,
+      loaded: true,
+      success: type,
+    }),
+    [updateFormFailure]: (state, { payload }) => ({
+      ...state,
+      loading: false,
+      error: payload
+    }),
+    [resetSuccess]: state => ({
+      ...state,
+      success: null,
+    })
   },
   initialState
 );
 
 // SELECTORS
-export const getForms = state => state.forms.data;
+export const formsDataSelector = state => state.forms.data;
+export const formsLoadingSelector = state => state.forms.loading;
+export const formsLoadedSelector = state => state.forms.loaded;
+export const formsErrorSelector = state => state.forms.error;
+export const formsSuccessSelector = state => state.forms.success;
+export const currFormId = (state, props) => props.match.params.id;
 
-export const getCurrForm = (state, props) => {
-  const forms = getForms(state);
-  const currFormId = +props.match.params.id;
-
-  return forms.filter(form => form.id === currFormId)[0];
-};
-
-// export const getCurrForm = createSelector(
-//   getForms,
-//   currFormId(props),
-//   forms => forms.filter(form => form.id === currFormId)[0],
-// );
+export const makeGetCurrForm = () => createSelector(
+  [formsDataSelector, currFormId],
+  (forms, id) => forms.filter(form => form._id.$oid === id)[0],
+);

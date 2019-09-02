@@ -1,10 +1,15 @@
 @import 'src/assets/styles/variables';
 
-.form-fill-page {
+.form-fill-page-wrapper {
+  padding: 25px;
+}
+
+.form-fill-page-body {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
+
   padding: 30px;
   border-radius: 4px;
   border: 2px dashed $color-primary;
@@ -15,10 +20,6 @@
     &__label {
       margin-bottom: 8px;
       font-size: 20px;
-    }
-
-    &__input {
-      font-size: 18px;
     }
   }
 
@@ -33,20 +34,4 @@
   .col.w-100 {
     width: 100%;
   }
-}
-
-.snackbar {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
-  width: 250px;
-  max-width: 100%;
-  padding: 16px;
-
-  color: rgba(255, 255, 255, 1);
-  text-align: center;
-  border-radius: 4px;
-  background-color: #646464;
 }

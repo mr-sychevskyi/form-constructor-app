@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import memoize from 'memoize-one';
 
-import { getFillsCount } from 'reducers/fills';
-import { getForms } from 'reducers/forms';
+import Snackbar from '@material-ui/core/Snackbar';
+import { formsSuccessSelector, resetSuccess } from 'reducers/forms';
+import { fillsTotalListSelector } from 'reducers/fills';
+import withFormsData from 'hocs/with-forms-data/with-forms-data';
+import withThemeWrapper from 'hocs/with-theme-wrapper/with-theme-wrapper';
 import FormsView from './views/forms-view';
 
 class Forms extends Component {
   state = {
-    currCopiedId: null
+    filterValue: '',
+    currCopiedId: null,
+  };
+
+  filterData = memoize(
+    (list, filterValue) => list.filter(item => item.name.toLowerCase().includes(filterValue.toLowerCase()))
+  );
+
+  handleChange = e => {
+    this.setState({ filterValue: e.target.value });
   };
 
   handleCopied = id => {
@@ -16,34 +29,53 @@ class Forms extends Component {
     });
   };
 
+  handleClose = () => {
+    this.props.resetSuccess();
+  };
+
   render() {
-    const { currCopiedId } = this.state;
-    const { forms } = this.props;
+    const { filterValue, currCopiedId } = this.state;
+    const { forms, success } = this.props;
+    const filteredList = this.filterData(forms, filterValue);
 
     return (
       <>
-        {forms.length === 0
-          ? <h3 className="info-title 1">No forms are available!</h3>
-          : (
-            <FormsView
-              {...this.props}
-              currCopiedId={currCopiedId}
-              handleCopied={this.handleCopied}
-            />
+        <FormsView
+          {...this.props}
+          forms={filteredList}
+          filterValue={filterValue}
+          currCopiedId={currCopiedId}
+          handleChange={this.handleChange}
+          handleCopied={this.handleCopied}
+        />
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          open={!!success}
+          autoHideDuration={3000}
+          onClose={this.handleClose}
+          ContentProps={{ 'aria-describedby': 'message-id', }}
+          message={(
+            <span className="snackbar is-success">
+              {success === 'FORMS_ADD_SUCCESS' && 'Form created!'}
+              {success === 'FORMS_UPDATE_SUCCESS' && 'Form updated!'}
+            </span>
           )}
+        />
       </>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  forms: getForms(state),
-  fillsCountList: getFillsCount(state),
+  fillsTotalList: fillsTotalListSelector(state),
+  success: formsSuccessSelector(state),
 });
 
 const enhance = connect(
   mapStateToProps,
-  {}
+  { resetSuccess }
 );
 
-export default enhance(Forms);
+const FormsHoc = withThemeWrapper(withFormsData(Forms));
+
+export default enhance(FormsHoc);

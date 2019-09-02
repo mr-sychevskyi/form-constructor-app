@@ -1,21 +1,13 @@
 @import 'src/assets/styles/variables';
 
+$form-constructor-border: $color-primary-light;
+
 .form-constructor {
   display: flex;
-  height: calc(100% - 200px);
+  height: calc(100% - 70px);
   margin-bottom: 20px;
   border-radius: 4px;
-  border: 2px solid $color-primary-light;
-
-  &-elements {
-    flex: 0 0 300px;
-    border-right: 2px solid $color-primary-light;
-  }
-
-  &-body {
-    flex: 1 1 auto;
-    padding: 20px;
-  }
+  border: 2px solid $form-constructor-border;
 }
 
 .app-navigation {
@@ -23,15 +15,27 @@
 }
 
 .btn-go-back {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 10px 20px;
-  font-size: 18px;
-  color: #505f79;
+  line-height: 24px;
+  color: $color-secondary-light;
 
   &:hover {
-    color: #000;
-
+    color: $color-secondary;
   }
 }
+
+.form-title {
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding: 8px 10px;
+  text-transform: uppercase;
+}
+
+.form-controls {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+

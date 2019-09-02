@@ -1,0 +1,64 @@
+@import 'src/assets/styles/variables';
+
+$btn-primary-color: #FAFAFA;
+$btn-primary-bg: $color-primary;
+$btn-primary-bg-hover: $color-primary-dark;
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .3s ease-in-out;
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all .3s ease-in-out;
+  }
+
+  &__text + &__icon,
+  &__icon + &__text {
+    margin-left: 10px;
+  }
+}
+
+.btn-primary {
+  padding: 10px 20px;
+
+  font-size: 18px;
+  color: $btn-primary-color;
+
+  border: 0;
+  border-radius: 4px;
+  background-color: $btn-primary-bg;
+  transition: all 0.25s ease-in-out;
+
+  &:not(:last-of-type) {
+    margin-right: 10px;
+  }
+
+  &:active,
+  &:focus,
+  &:hover {
+    cursor: pointer;
+    background-color: $btn-primary-bg-hover;
+  }
+
+  &_size_l {
+    width: 180px;
+  }
+
+  &_size_m {
+    width: 150px;
+  }
+
+  &_size_s {
+    width: 120px;
+  }
+
+  &_size_xs {
+    width: 95px;
+  }
+}

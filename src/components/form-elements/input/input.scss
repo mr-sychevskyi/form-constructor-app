@@ -1,11 +1,5 @@
 @import 'src/assets/styles/variables';
 
-.form {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-}
-
 .form-group {
   &-body {
     width: calc(100% - 100px);
@@ -38,7 +32,7 @@
     &-webkit-input-placeholder {
       font-family: 'Roboto', sans-serif;
       font-size: 16px;
-      color: #3b475a;
+      color: $color-secondary-dark;
       letter-spacing: normal;
     }
 
@@ -65,7 +59,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 10px;
+    padding: 6px 10px;
     margin-bottom: 20px;
     background: #FFF;
     border-radius: 4px;
@@ -89,25 +83,9 @@
   }
 }
 
-.form__btn {
-  padding: 10px 20px;
-  margin-right: 10px;
-
-  font-size: 18px;
-  color: #FAFAFA;
-
-  border: 0;
-  border-radius: 4px;
-  background-color: $color-primary;
-  transition: all 0.25s ease-in-out;
-}
-
 .form-group__btn:active,
 .form-group__btn:focus,
-.form-group__btn:hover,
-.form__btn:active,
-.form__btn:focus,
-.form__btn:hover {
+.form-group__btn:hover {
   cursor: pointer;
   background-color: $color-primary-dark;
 }

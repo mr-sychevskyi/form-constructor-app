@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Modal from '@material-ui/core/Modal';
 
 import { uniqueId } from 'utils';
-import { getCurrForm } from 'reducers/forms';
+import { makeGetCurrForm } from 'reducers/forms';
 import {
-  addToConstructor, resetConstructorData, updateConstructor, getConstructorElements,
+  addToConstructor, resetConstructorData, updateConstructor, constructorElements,
 } from 'reducers/constructor';
-import { Header, ModalWrapper } from 'components';
+import withThemeWrapper from 'hocs/with-theme-wrapper/with-theme-wrapper';
 
 import ConstructorBody from './constructor-body/constructor-body';
 import ConstructorElements from './constructor-elements/constructor-elements';
@@ -23,18 +24,18 @@ class Constructor extends Component {
   };
 
   componentDidMount() {
-    const { currForm } = this.props;
+    const { currForm, addToConstructor, resetConstructorData } = this.props;
 
-    this.props.resetConstructorData();
+    resetConstructorData();
 
     if (currForm) {
-      const { id, fields } = currForm;
+      const { fields } = currForm;
 
       this.setState({
-        formId: id,
+        formId: currForm._id.$oid,
       });
 
-      fields.forEach(el => this.props.addToConstructor(el));
+      fields.forEach(el => addToConstructor(el));
     }
   }
 
@@ -52,9 +53,10 @@ class Constructor extends Component {
   };
 
   addElToConstructor = el => {
-    // const {  } = this.props;
+    const { addToConstructor, updateConstructor } = this.props;
     const { id } = this.state.currEl;
-    const action = id ? this.props.updateConstructor : this.props.addToConstructor;
+
+    const action = id ? updateConstructor : addToConstructor;
     const formElData = {
       id: id || uniqueId(),
       ...el
@@ -64,53 +66,56 @@ class Constructor extends Component {
   };
 
   render() {
-    const { isElementConfigOpen } = this.state;
+    const { currEl, isElementConfigOpen } = this.state;
 
     return (
       <>
-        <Header/>
-        <main className="main">
-          <div className="container">
-            <div className="form-constructor">
-              <aside className="form-constructor-elements">
-                <ConstructorElements openElementConfig={this.openElementConfig}/>
-              </aside>
-              <main className="form-constructor-body">
-                <ConstructorBody
-                  {...this.props}
-                  {...this.state}
-                  currEl={this.state.currEl}
-                  openElementConfig={this.openElementConfig}
-                />
-              </main>
-            </div>
-            <div className="app-navigation">
-              <Link className="btn btn-go-back" to="/">
-                <i className="btn__icon material-icons">keyboard_backspace</i>
-                <span className="btn__text">Go back</span>
-              </Link>
-            </div>
-          </div>
-        </main>
-        <ModalWrapper isOpen={isElementConfigOpen}>
+        <div className="form-constructor">
+          <aside className="form-constructor-elements">
+            <ConstructorElements openElementConfig={this.openElementConfig}/>
+          </aside>
+          <main className="form-constructor-body">
+            <ConstructorBody
+              {...this.props}
+              {...this.state}
+              openElementConfig={this.openElementConfig}
+            />
+          </main>
+        </div>
+        <div className="app-navigation">
+          <Link className="btn btn-go-back" to="/">
+            <i className="btn__icon material-icons">keyboard_backspace</i>
+            <span className="btn__text">Go back</span>
+          </Link>
+        </div>
+        <Modal
+          aria-labelledby="el-config-modal"
+          aria-describedby="el-config-modal"
+          open={isElementConfigOpen}
+          onClose={this.handleElementConfigOpen}
+        >
           <ConstructorElConfig
-            currEl={this.state.currEl}
+            currEl={currEl}
             addElToConstructor={this.addElToConstructor}
             handleElementConfigOpen={this.handleElementConfigOpen}
           />
-        </ModalWrapper>
+        </Modal>
       </>
     );
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  constructorBody: getConstructorElements(state),
-  currForm: getCurrForm(state, props),
-});
+const makeMapStateToProps = () => {
+  const getCurrForm = makeGetCurrForm();
+
+  return (state, props) => ({
+    constructorBody: constructorElements(state),
+    currForm: getCurrForm(state, props),
+  });
+};
 
 const enhance = connect(
-  mapStateToProps,
+  makeMapStateToProps,
   {
     addToConstructor,
     updateConstructor,
@@ -118,4 +123,6 @@ const enhance = connect(
   }
 );
 
-export default enhance(Constructor);
+const ConstructorHoc = withThemeWrapper(Constructor);
+
+export default enhance(ConstructorHoc);

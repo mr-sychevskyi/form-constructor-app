@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getFormFills } from 'reducers/fills';
+import { makeGetCurrForm } from 'reducers/forms';
+import withFormFillsData from 'hocs/with-form-fills-data/with-form-fills-data';
+import withThemeWrapper from 'hocs/with-theme-wrapper/with-theme-wrapper';
 import FormFillsView from './views/form-fills-view';
 
 class FormFills extends Component {
@@ -12,13 +14,19 @@ class FormFills extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  fills: getFormFills(state, props),
-});
+const makeMapStateToProps = () => {
+  const getCurrForm = makeGetCurrForm();
+
+  return (state, props) => ({
+    currForm: getCurrForm(state, props),
+  });
+};
 
 const enhance = connect(
-  mapStateToProps,
+  makeMapStateToProps,
   null
 );
 
-export default enhance(FormFills);
+const FormFillsHoc = withThemeWrapper(withFormFillsData(FormFills));
+
+export default enhance(FormFillsHoc);

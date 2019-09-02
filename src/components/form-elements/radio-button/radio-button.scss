@@ -1,3 +1,7 @@
+$radio-bg: #fff;
+$radio-border: #c5cbd6;
+$radio-checked-bg-color: #165bfb;
+
 .radio-button-group {
   display: flex;
   flex-wrap: wrap;
@@ -33,8 +37,8 @@
     width: 18px;
     height: 18px;
 
-    background-color: #fff;
-    border: 1px solid #c5cbd6;
+    background-color: $radio-bg;
+    border: 1px solid $radio-border;
     border-radius: 50%;
     transition: .4s;
   }
@@ -60,7 +64,7 @@
   }
 
   &__input:checked + .radio-button__checkmark {
-    background-color: #165bfb;
+    background-color: $radio-checked-bg-color;
   }
 
   &__input:checked + .radio-button__checkmark:after {

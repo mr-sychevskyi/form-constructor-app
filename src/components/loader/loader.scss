@@ -1,27 +1,36 @@
-.loader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-
-  &__circle {
-    width: 100px;
-    height: 100px;
-    padding: 10px;
-    border: 8px dashed rgba(40, 40, 40, .8);
-    border-radius: 100%;
-    animation: rotation 1.8s 0s ease-in-out infinite;
-  }
+.progress {
+  max-width: 120px;
+  overflow: hidden;
+  animation: progress 2s linear infinite;
 }
 
-@keyframes rotation {
+.progress__inner {
+  font-size: 18px;
+}
+
+@keyframes progress {
   0% {
-    transform: rotate(0deg);
+    color: rgb(175, 75, 75);
+    width: 0;
   }
-  50% {
-    transform: rotate(180deg);
+  30% {
+    color: rgb(200, 150, 25);
+    width: 20%;
+  }
+  45% {
+    color: rgb(200, 175, 50);
+    width: 40%;
+  }
+  60% {
+    color: rgb(175, 175, 75);
+    width: 60%;
+  }
+  75% {
+    color: rgb(150, 175, 75);
+    width: 75%;
   }
   100% {
-    transform: rotate(360deg);
+    color: rgb(125, 175, 75);
+    width: 100%;
   }
 }
