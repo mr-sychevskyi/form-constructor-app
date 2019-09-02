@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import { getFormFills } from 'reducers/fills';
+import withFormFillsData from 'hocs/with-form-fills-data/with-form-fills-data';
+import withThemeWrapper from 'hocs/with-theme-wrapper/with-theme-wrapper';
 import FormFillsView from './views/form-fills-view';
 
 class FormFills extends Component {
@@ -12,13 +12,6 @@ class FormFills extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  fills: getFormFills(state, props),
-});
+const FormFillsHoc = withThemeWrapper(withFormFillsData(FormFills));
 
-const enhance = connect(
-  mapStateToProps,
-  null
-);
-
-export default enhance(FormFills);
+export default FormFillsHoc;

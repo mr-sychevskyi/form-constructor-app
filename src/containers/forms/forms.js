@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getFormFillsTotalList } from 'reducers/fills';
-import { getForms } from 'reducers/forms';
+import { fillsTotalListSelector } from 'reducers/fills';
+import withFormsData from 'hocs/with-forms-data/with-forms-data';
+import withThemeWrapper from 'hocs/with-theme-wrapper/with-theme-wrapper';
 import FormsView from './views/forms-view';
 
 class Forms extends Component {
@@ -18,27 +19,19 @@ class Forms extends Component {
 
   render() {
     const { currCopiedId } = this.state;
-    const { forms } = this.props;
 
     return (
-      <>
-        {forms.length === 0
-          ? <h3 className="info-title 1">No forms are available!</h3>
-          : (
-            <FormsView
-              {...this.props}
-              currCopiedId={currCopiedId}
-              handleCopied={this.handleCopied}
-            />
-          )}
-      </>
+      <FormsView
+        {...this.props}
+        currCopiedId={currCopiedId}
+        handleCopied={this.handleCopied}
+      />
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  forms: getForms(state),
-  fillsTotalList: getFormFillsTotalList(state),
+  fillsTotalList: fillsTotalListSelector(state),
 });
 
 const enhance = connect(
@@ -46,4 +39,6 @@ const enhance = connect(
   {}
 );
 
-export default enhance(Forms);
+const FormsHoc = withThemeWrapper(withFormsData(Forms));
+
+export default enhance(FormsHoc);
