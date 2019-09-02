@@ -6,35 +6,33 @@ import './form-fill-page-view.scss';
 const FormFillPageView = ({
   data, fillPage, success, failure, resetForm, handleChange, handleToggleData, handleSubmit
 }) => (
-  <div className="form-fill-page-wrapper">
-    <div className="container">
-      {!!failure && <Snackbar className="is-error" title={failure.message}/>}
-      {!!success && <Snackbar className="is-success" title="Successful!"/>}
+  <>
+    {!!failure && <Snackbar className="is-error" title={failure.message}/>}
+    {!!success && <Snackbar className="is-success" title="Successful!"/>}
 
-      {!success && !failure && (
-        <div className="form-fill-page">
-          <h2 className="section-title">{fillPage.name}</h2>
-          <form className="form-fill-page-body" onSubmit={handleSubmit}>
-            {fillPage.fields.map(el => (
-              <div key={el.name} className="col w-100">
-                <FormElementsLibrary
-                  el={el}
-                  value={data}
-                  onChange={handleChange}
-                  onToggle={handleToggleData}
-                  editable
-                />
-              </div>
-            ))}
-            <div className="form-controls">
-              <button className="btn btn-primary btn-primary_size_s" type="button" onClick={resetForm}>Reset</button>
-              <button className="btn btn-primary btn-primary_size_m" type="submit">Save</button>
+    {!success && !failure && (
+      <div className="form-fill-page">
+        <h2 className="section-title">{fillPage.name}</h2>
+        <form className="form-fill-page-body" onSubmit={handleSubmit}>
+          {fillPage.fields.map(el => (
+            <div key={el.name} className="col w-100">
+              <FormElementsLibrary
+                el={el}
+                value={data}
+                onChange={handleChange}
+                onToggle={handleToggleData}
+                editable
+              />
             </div>
-          </form>
-        </div>
-      )}
-    </div>
-  </div>
+          ))}
+          <div className="form-controls">
+            <button className="btn btn-primary btn-primary_size_s" type="button" onClick={resetForm}>Reset</button>
+            <button className="btn btn-primary btn-primary_size_m" type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+    )}
+  </>
 );
 
 export default FormFillPageView;
