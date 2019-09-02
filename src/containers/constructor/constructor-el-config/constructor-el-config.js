@@ -15,15 +15,8 @@ class ConstructorElConfig extends Component {
   componentDidMount() {
     const { currEl } = this.props;
 
-    Object.keys(currEl).forEach(field => this.handleChangeDataState(field, currEl[field]));
+    Object.keys(currEl).forEach(field => this.setFormState(field, currEl[field]));
   }
-
-  // isNoChanged = () => {
-  //   const { id, ...other } = this.props.currEl;
-  //   const { data } = this.state;
-  //
-  //   return JSON.stringify(other) === JSON.stringify(data);
-  // };
 
   addOption = () => {
     const { data: { options }, newOption } = this.state;
@@ -35,7 +28,7 @@ class ConstructorElConfig extends Component {
       value,
     };
 
-    this.handleChangeDataState('options', [newOptionObj, ...options]);
+    this.setFormState('options', [...options, newOptionObj]);
     this.setState({
       newOption: '',
       isSelectEmpty: false
@@ -47,7 +40,7 @@ class ConstructorElConfig extends Component {
     const { id } = e.currentTarget;
     const newOptions = options.filter(option => option.value !== +id);
 
-    this.handleChangeDataState('options', newOptions);
+    this.setFormState('options', newOptions);
   };
 
   handleChange = e => {
@@ -56,7 +49,7 @@ class ConstructorElConfig extends Component {
     });
   };
 
-  handleChangeDataState = (name, value) => {
+  setFormState = (name, value) => {
     this.setState(prevState => ({
       data: {
         ...prevState.data,
@@ -66,14 +59,14 @@ class ConstructorElConfig extends Component {
   };
 
   handleChangeData = e => {
-    this.handleChangeDataState(e.target.name, e.target.value);
+    this.setFormState(e.target.name, e.target.value);
   };
 
   handleToggleData = e => {
     const { name } = e.target;
     const { data } = this.state;
 
-    this.handleChangeDataState(name, !data[name]);
+    this.setFormState(name, !data[name]);
   };
 
   handleSubmit = e => {
@@ -104,14 +97,15 @@ class ConstructorElConfig extends Component {
   };
 
   render() {
-    const { handleElementConfigOpen } = this.props;
+    const { currEl, handleElementConfigOpen } = this.props;
 
     return (
       <ConstructorElConfigView
         {...this.state}
-        handleElementConfigOpen={handleElementConfigOpen}
+        currEl={currEl}
         addOption={this.addOption}
         removeOption={this.removeOption}
+        handleElementConfigOpen={handleElementConfigOpen}
         handleChange={this.handleChange}
         handleChangeData={this.handleChangeData}
         handleToggleData={this.handleToggleData}
@@ -127,7 +121,8 @@ const mapStateToProps = (state) => ({
 
 const enhance = connect(
   mapStateToProps,
-  {}
+  null,
+  null,
+  { forwardRef: true }
 );
-
 export default enhance(ConstructorElConfig);

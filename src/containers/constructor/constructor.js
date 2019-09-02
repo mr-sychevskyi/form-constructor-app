@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Modal from '@material-ui/core/Modal';
 
 import { uniqueId } from 'utils';
 import { makeGetCurrForm } from 'reducers/forms';
@@ -8,7 +9,6 @@ import {
   addToConstructor, resetConstructorData, updateConstructor, constructorElements,
 } from 'reducers/constructor';
 import withThemeWrapper from 'hocs/with-theme-wrapper/with-theme-wrapper';
-import { ModalWrapper } from 'components';
 
 import ConstructorBody from './constructor-body/constructor-body';
 import ConstructorElements from './constructor-elements/constructor-elements';
@@ -24,9 +24,9 @@ class Constructor extends Component {
   };
 
   componentDidMount() {
-    const { currForm } = this.props;
+    const { currForm, addToConstructor, resetConstructorData } = this.props;
 
-    this.props.resetConstructorData();
+    resetConstructorData();
 
     if (currForm) {
       const { fields } = currForm;
@@ -35,7 +35,7 @@ class Constructor extends Component {
         formId: currForm._id.$oid,
       });
 
-      fields.forEach(el => this.props.addToConstructor(el));
+      fields.forEach(el => addToConstructor(el));
     }
   }
 
@@ -53,8 +53,10 @@ class Constructor extends Component {
   };
 
   addElToConstructor = el => {
+    const { addToConstructor, updateConstructor } = this.props;
     const { id } = this.state.currEl;
-    const action = id ? this.props.updateConstructor : this.props.addToConstructor;
+
+    const action = id ? updateConstructor : addToConstructor;
     const formElData = {
       id: id || uniqueId(),
       ...el
@@ -64,7 +66,7 @@ class Constructor extends Component {
   };
 
   render() {
-    const { isElementConfigOpen } = this.state;
+    const { currEl, isElementConfigOpen } = this.state;
 
     return (
       <>
@@ -76,7 +78,6 @@ class Constructor extends Component {
             <ConstructorBody
               {...this.props}
               {...this.state}
-              currEl={this.state.currEl}
               openElementConfig={this.openElementConfig}
             />
           </main>
@@ -87,13 +88,18 @@ class Constructor extends Component {
             <span className="btn__text">Go back</span>
           </Link>
         </div>
-        <ModalWrapper isOpen={isElementConfigOpen}>
+        <Modal
+          aria-labelledby="el-config-modal"
+          aria-describedby="el-config-modal"
+          open={isElementConfigOpen}
+          onClose={this.handleElementConfigOpen}
+        >
           <ConstructorElConfig
-            currEl={this.state.currEl}
+            currEl={currEl}
             addElToConstructor={this.addElToConstructor}
             handleElementConfigOpen={this.handleElementConfigOpen}
           />
-        </ModalWrapper>
+        </Modal>
       </>
     );
   }
