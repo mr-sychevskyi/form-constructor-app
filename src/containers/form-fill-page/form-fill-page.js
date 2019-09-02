@@ -119,4 +119,12 @@ const enhance = connect(
 
 const FormFillPageHoc = withFormsData(FormFillPage);
 
-export default enhance(FormFillPageHoc);
+const FormFillPageWrapper = props => (
+  <div className="form-fill-page-wrapper">
+    <div className="container">
+      <FormFillPageHoc {...props}/>
+    </div>
+  </div>
+);
+
+export default enhance(FormFillPageWrapper);
