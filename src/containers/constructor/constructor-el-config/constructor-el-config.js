@@ -125,4 +125,5 @@ const enhance = connect(
   null,
   { forwardRef: true }
 );
+
 export default enhance(ConstructorElConfig);

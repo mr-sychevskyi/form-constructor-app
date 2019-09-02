@@ -7,11 +7,13 @@ import { FORM_ELEMENTS, FORM_ELEMENTS_LIMIT } from './constructor-elements-const
 
 class ConstructorElements extends Component {
   render() {
+    const { currFormElementsAdded, openElementConfig } = this.props;
+
     return (
       <ConstructorElementsView
-        {...this.props}
         data={FORM_ELEMENTS}
-        isElementsLimitReached={this.props.currFormElementsAdded >= FORM_ELEMENTS_LIMIT}
+        isElementsLimitReached={currFormElementsAdded >= FORM_ELEMENTS_LIMIT}
+        openElementConfig={openElementConfig}
       />
     );
   }

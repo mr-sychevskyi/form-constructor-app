@@ -1,32 +1,32 @@
 import React from 'react';
-
 import './constructor-elements-view.scss';
 
 const ConstructorElementsView = ({ data, isElementsLimitReached, openElementConfig }) => (
   <>
-    <h2 className="form-elements-title">Form elements:</h2>
-    {isElementsLimitReached && <span className="info-title">No more form fields can be added!</span>}
+    <h3 className="form-constructor-elements-title">Form elements:</h3>
+    {isElementsLimitReached &&
+      <div className="px-4"><span className="info-error">No more form elements can be added!</span></div>
+    }
 
-    <ul className="form-elements">
+    <ul className="form-constructor-elements-list">
       {data.map(el => (
         <li key={el.el} className="list-item">
           <button
-            className="btn"
+            className="btn btn-element"
             type="button"
             disabled={isElementsLimitReached}
             onClick={() => openElementConfig(el)}
           >
-            <span className="list-item-info">
+            <span className="btn-element-info">
               <i className="btn__icon material-icons">{el.icon}</i>
               <span className="btn__text">{el.el}</span>
             </span>
-            <i className="list-item-icon material-icons">add</i>
+            <i className="btn-element-icon material-icons">add</i>
           </button>
         </li>
       ))}
     </ul>
   </>
 );
-
 
 export default ConstructorElementsView;

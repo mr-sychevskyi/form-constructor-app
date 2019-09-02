@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
+import { getOptionName } from 'utils';
 import { addForm, updateForm } from 'reducers/forms';
 import { removeFromConstructor, updateConstructorOrder, } from 'reducers/constructor';
 import ConstructorBodyView from './views/constructor-body-view';
+import { TYPE_ATTR_OPTIONS as typeAttrOptions } from '../constructor-el-config/constructor-el-config-constants';
 
 class ConstructorBody extends Component {
   state = {
     formName: '',
-    columnsCount: 1,
     isFormCreated: false,
   };
 
@@ -35,27 +36,53 @@ class ConstructorBody extends Component {
     });
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const { constructorBody, formId, addForm, updateForm, } = this.props;
+    const { formName } = this.state;
+
+    const constructorBodyData = constructorBody.map(element =>
+      (element.type
+        ? {
+          ...element,
+          type: element.type.length > 1 ? element.type : getOptionName(typeAttrOptions, element.type)
+        }
+        : element)
+    );
+
+    const action = formId ? updateForm : addForm;
+    const formData = {
+      name: formName,
+      fields: constructorBodyData,
+    };
+
+    action(formData, formId);
+    this.handleIsFormCreated();
+  };
+
   render() {
     const { constructorBody } = this.props;
-    const { formName, columnsCount, isFormCreated } = this.state;
+    const { formName, isFormCreated } = this.state;
 
     return (
       <>
         {isFormCreated && <Redirect to="/forms/list"/>}
 
-        <div className="constructor-body">
-          {!constructorBody.length
-            ? <h2 className="no-items">No elements yet :(</h2>
-            : (
-              <ConstructorBodyView
-                {...this.props}
-                formName={formName}
-                columnsCount={columnsCount}
-                handleChange={this.handleChange}
-                handleIsFormCreated={this.handleIsFormCreated}
-              />
-            )}
-        </div>
+        {!constructorBody.length
+          ? (
+            <div className="d-table">
+              <h2 className="d-table-cell info-default">No elements yet :(</h2>
+            </div>
+          )
+          : (
+            <ConstructorBodyView
+              {...this.props}
+              formName={formName}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+            />
+          )}
       </>
     );
   }
