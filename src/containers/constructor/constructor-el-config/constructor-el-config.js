@@ -21,8 +21,9 @@ class ConstructorElConfig extends Component {
   addOption = () => {
     const { data: { options }, newOption } = this.state;
     const value = options.length
-      ? options.sort((a, b) => a > b)[0].value + 1
+      ? options[options.length - 1].value + 1
       : 0;
+
     const newOptionObj = {
       name: newOption,
       value,
@@ -38,6 +39,7 @@ class ConstructorElConfig extends Component {
   removeOption = e => {
     const { options } = this.state.data;
     const { id } = e.currentTarget;
+
     const newOptions = options.filter(option => option.value !== +id);
 
     this.setFormState('options', newOptions);
