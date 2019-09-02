@@ -1,3 +1,6 @@
+$checkbox-bg-color: #dfe2e8;
+$checkbox-checked-bg-color: #165bfb;
+
 .checkbox {
   position: relative;
   display: inline-block;
@@ -18,7 +21,7 @@
     bottom: 0;
 
     display: block;
-    background-color: #dfe2e8;
+    background-color: $checkbox-bg-color;
     border-radius: 6px;
   }
 
@@ -27,8 +30,8 @@
 
     position: absolute;
     left: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 45%;
+    transform: translateY(-45%);
 
     width: 14px;
     height: 14px;
@@ -41,7 +44,7 @@
   }
 
   &__input:checked + .checkbox__toggler {
-    background-color: #165bfb;
+    background-color: $checkbox-checked-bg-color;
   }
 
   &__input:checked + .checkbox__toggler:before {
