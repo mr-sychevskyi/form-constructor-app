@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { CheckBox, Input, InputWithButton, Select } from 'components';
 import {
-  ATTRIBUTES_CONFIG as attrConfig,
-  TYPE_ATTR_OPTIONS as typeAttrOptions
+  ATTRIBUTES_CONFIG as attrConfig, TYPE_ATTR_OPTIONS as typeAttrOptions
 } from '../constructor-el-config-constants';
 
 import './constructor-el-config-view.scss';
 
 const ConstructorElConfigView = ({
-  data, data: { options }, newOption, isNameExists, isSelectEmpty, handleElementConfigOpen,
-  addOption, removeOption, handleChange, handleChangeData, handleToggleData, handleSubmit
+  data, data: { options }, currEl, newOption, isNameExists, isSelectEmpty, handleElementConfigOpen,
+  addOption, removeOption, handleChange, handleChangeData, handleToggleData, handleSubmit,
 }) => {
+  const [disabled, setDisabled] = useState(false);
+
+  useEffect(() => setDisabled(JSON.stringify(currEl) === JSON.stringify(data)));
+
   return (
-    <form className="form-el-config" onSubmit={handleSubmit}>
-      <h2 className="form-title">{data.el} element config</h2>
+    <form className="form-el-config" onSubmit={handleSubmit} tabIndex="-1">
+      <h3 className="form-title">{data.el} element config</h3>
 
       <Input
         className="form-group-inline"
@@ -30,9 +33,9 @@ const ConstructorElConfigView = ({
         onChange={handleChangeData}
       >
         {isNameExists && (
-          <span className="input-error">
+          <span className="info-error-input">
             <i className="material-icons">error_outline</i>
-            <span className="input-error-text">This name already exists!</span>
+            <span className="info-error-input-text">This name already exists!</span>
           </span>
         )}
       </Input>
@@ -137,9 +140,9 @@ const ConstructorElConfigView = ({
             onClick={addOption}
           >
             {isSelectEmpty && (
-              <span className="input-error">
+              <span className="info-error-input">
                 <i className="material-icons">error_outline</i>
-                <span className="input-error-text">Need at least one options!</span>
+                <span className="info-error-input-text">Need at least one options!</span>
               </span>
             )}
           </InputWithButton>
@@ -148,13 +151,10 @@ const ConstructorElConfigView = ({
             <>
               <p className="arrow-down">&#x2193;</p>
 
-              <ul className="form-group-list">
+              <ul className="options-list">
                 {options.map(item => (
-                  <li key={item.value} className="form-group-list-item">
-                    <span>
-                      {item.name} (Option index: {item.value})
-                    </span>
-
+                  <li key={item.value} className="options-list-item">
+                    <span>{item.name} (Option index: {item.value})</span>
                     <button id={item.value} type="button" onClick={removeOption}>
                       <i className="material-icons">delete</i>
                     </button>
@@ -166,8 +166,12 @@ const ConstructorElConfigView = ({
         </div>
       )}
 
-      <button className="btn form__btn" type="button" onClick={handleElementConfigOpen}>Cancel</button>
-      <button className="btn form__btn" type="submit">Submit</button>
+      <div className="form-controls">
+        <button className="btn btn-primary btn-primary_size_xs" type="button" onClick={handleElementConfigOpen}>
+          Cancel
+        </button>
+        <button className="btn btn-primary btn-primary_size_s" type="submit" disabled={disabled}>Submit</button>
+      </div>
     </form>
   );
 };
