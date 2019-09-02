@@ -106,3 +106,4 @@ export const currFormId = (state, props) => props.match.params.id;
 export const makeGetCurrForm = () => createSelector(
   [formsDataSelector, currFormId],
   (forms, id) => forms.filter(form => form._id.$oid === id)[0],
+);
