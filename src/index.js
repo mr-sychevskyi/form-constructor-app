@@ -8,8 +8,6 @@ import Routes from 'routes';
 
 import 'assets/styles/common.scss';
 
-// const basename = '/smk';
-
 const App = () => (
   <Provider store={store}>
     <HashRouter>

@@ -45,6 +45,7 @@ module.exports = {
     "no-nested-ternary": 0,
     "operator-linebreak": 0,
     "no-sequences": 0,
+    "no-shadow": 0,
     "implicit-arrow-linebreak": 0,
     "object-curly-newline": 0,
     "function-paren-newline": 0,
