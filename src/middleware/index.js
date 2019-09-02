@@ -1,9 +1,8 @@
 import thunk from 'redux-thunk';
 import reduxLogger from 'redux-logger';
 
-const middlewares = [
-  thunk,
-  reduxLogger
-];
+const middleware = [thunk];
 
-export default middlewares;
+export default process.env.NODE_ENV === 'development'
+  ? [...middleware, reduxLogger]
+  : [...middleware];
