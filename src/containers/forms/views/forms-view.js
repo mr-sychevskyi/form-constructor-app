@@ -5,7 +5,7 @@ import { Header } from 'components';
 
 import './forms-view.scss';
 
-const FormsView = ({ forms, fillsCountList, currCopiedId, handleCopied }) => (
+const FormsView = ({ forms, fillsTotalList, currCopiedId, handleCopied }) => (
   <>
     <Header/>
 
@@ -22,18 +22,20 @@ const FormsView = ({ forms, fillsCountList, currCopiedId, handleCopied }) => (
                     <span className="forms-list-text forms-list-name">{form.name}</span>
                     <span className="forms-list-text forms-list-bx">Fields: {form.fields.length}</span>
                     <span className="forms-list-text forms-list-bx">
-                      <span>Fills: {fillsCountList[form.id] || 0}</span>
+                      <span>Fills: {fillsTotalList[form.id] || 0}</span>
                     </span>
-                    {fillsCountList[form.id] &&
-                      <Link className="btn btn-link" to={`/fills/${form.id}`} replace>View fills</Link>
-                    }
+                    {fillsTotalList[form.id] && (
+                      <Link className="btn btn-link" to={`/fills/${form.id}`} replace>
+                        View fills
+                      </Link>
+                    )}
                   </div>
 
                   <div className="forms-list-controls">
                     {/* <Link className="forms-list-text" to={`/forms/active/${form.id}`}>Link to fill</Link> */}
 
-                    {!fillsCountList[form.id] && (
-                      <Link className="btn btn-link" to={`/forms/${form.id}`} title="Edit form" replace>
+                    {!fillsTotalList[form.id] && (
+                      <Link className="btn btn-link" title="Edit form" to={`/forms/${form.id}`} replace>
                         <i className="btn__icon material-icons">edit</i>
                       </Link>
                     )}
@@ -44,13 +46,11 @@ const FormsView = ({ forms, fillsCountList, currCopiedId, handleCopied }) => (
                     >
                       <button className="btn btn-link btn-clipboard" type="button">
                         <span className="btn__text">Copy link to fill</span>
-                        <i
-                          className={`btn__icon material-icons ${currCopiedId === form.id ? 'copied' : ''}`}
-                        >done
+                        <i className={`btn__icon material-icons ${currCopiedId === form.id ? 'copied' : ''}`}>
+                          done
                         </i>
                       </button>
                     </CopyToClipboard>
-
                   </div>
                 </div>
               </li>
