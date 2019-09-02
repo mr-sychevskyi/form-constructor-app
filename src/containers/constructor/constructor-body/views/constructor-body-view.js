@@ -1,114 +1,77 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
-import { getOptionName } from 'utils';
 import { DragDropWrapper } from 'components';
-import {
-  TYPE_ATTR_OPTIONS as typeAttrOptions
-} from '../../constructor-el-config/constructor-el-config-constants';
 import FormElementsLibrary from '../constructor-body-constants';
 
 import './constructor-body-view.scss';
 
 const ConstructorBodyView = ({
-  constructorBody, currForm, formId, formName, columnsCount, removeFromConstructor, resetConstructorData,
-  handleChange, handleIsFormCreated, updateConstructorOrder, openElementConfig, addForm, updateForm,
+  constructorBody, formId, formName, currForm, removeFromConstructor, resetConstructorData,
+  handleChange, handleSubmit, updateConstructorOrder, openElementConfig,
 }) => {
-  const handleSubmit = e => {
-    e.preventDefault();
+  const [disabled, setDisabled] = useState(false);
 
-    const constructorBodyData = constructorBody.map(element =>
-      (element.type
-        ? {
-          ...element,
-          type: element.type.length > 1 ? element.type : getOptionName(typeAttrOptions, element.type)
-        }
-        : element)
-    );
+  useEffect(() => {
+    if (formId) {
+      const formData = {
+        _id: { $oid: formId },
+        name: formName,
+        fields: constructorBody,
+      };
 
-    const action = formId ? updateForm : addForm;
-    const formData = {
-      name: formName,
-      fields: constructorBodyData,
-    };
-
-    action(formData, formId);
-    handleIsFormCreated();
-  };
-
-  const isNoChanged = () => {
-    const fieldsCompare = constructorBody.map(item => {
-      const { id, ...other } = item;
-
-      return other;
-    });
-
-    const formData = {
-      id: formId,
-      name: formName,
-      fields: fieldsCompare
-    };
-
-    return JSON.stringify(currForm) === JSON.stringify(formData);
-  };
+      setDisabled(JSON.stringify(currForm) === JSON.stringify(formData));
+    }
+  });
 
   return (
-    <>
-      <form className="form-list" onSubmit={handleSubmit}>
-        <div className="form-views-config">
-          <input
-            className="form-title"
-            name="formName"
-            onChange={handleChange}
-            value={formName}
-            placeholder="Enter form name"
-            required
-          />
-
-          <div className="column-counts-config" hidden>
-            <span>Columns: &nbsp;</span>
-            <button className="btn btn-column" type="button" name="columnsCount" value={1} onClick={handleChange}>1
-            </button>
-            <span>&nbsp; / &nbsp;</span>
-            <button className="btn btn-column" type="button" name="columnsCount" value={2} onClick={handleChange}>2
-            </button>
-          </div>
-        </div>
-        <DragDropWrapper items={constructorBody} action={updateConstructorOrder} className="form-constructor-fields">
-          {constructorBody.map((el, index) => (
-            <Draggable key={el.id} draggableId={el.id} index={index}>
-              {provided => (
-                <div
-                  className={`col w-${100 / columnsCount}`}
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                >
-                  <div className="form-group-body">
-                    <FormElementsLibrary el={el} editable={false}/>
-                  </div>
-
-                  <div className="form-group-controls">
-                    <button className="btn btn-icon" type="button" onClick={() => openElementConfig(el)}>
-                      <i className="material-icons">settings</i>
-                    </button>
-                    <button className="btn btn-icon" type="button" onClick={() => removeFromConstructor(el.id)}>
-                      <i className="material-icons">delete</i>
-                    </button>
-                  </div>
+    <form className="constructor-body" onSubmit={handleSubmit}>
+      <div className="constructor-body-config">
+        <input
+          className="constructor-body-title"
+          name="formName"
+          onChange={handleChange}
+          value={formName}
+          placeholder="Enter form name"
+          required
+        />
+      </div>
+      <DragDropWrapper items={constructorBody} action={updateConstructorOrder} className="constructor-body-fields">
+        {constructorBody.map((el, index) => (
+          <Draggable key={el.id} draggableId={el.id} index={index}>
+            {provided => (
+              <li
+                className="col w-100"
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              >
+                <div className="form-group-body">
+                  <FormElementsLibrary el={el} editable={false}/>
                 </div>
-              )}
-            </Draggable>
-          ))}
-        </DragDropWrapper>
-        <div className="form-controls">
-          <button className="btn form__btn" type="button" onClick={() => resetConstructorData()}>Clear</button>
-          <button className="btn form__btn" type="submit" disabled={formId && isNoChanged()}>
-            {formId ? 'Update form' : 'Create form'}
-          </button>
-        </div>
-      </form>
-    </>
+
+                <div className="form-group-controls">
+                  <button className="btn btn-icon" type="button" onClick={() => openElementConfig(el)}>
+                    <i className="material-icons">settings</i>
+                  </button>
+                  <button className="btn btn-icon" type="button" onClick={() => removeFromConstructor(el.id)}>
+                    <i className="material-icons">delete</i>
+                  </button>
+                </div>
+              </li>
+            )}
+          </Draggable>
+        ))}
+      </DragDropWrapper>
+      <div className="form-controls">
+        <button className="btn btn-primary btn-primary_size_s" type="button" onClick={resetConstructorData}>
+          Clear
+        </button>
+        <button className="btn btn-primary btn-primary_size_m" type="submit" disabled={disabled}>
+          {formId ? 'Update form' : 'Create form'}
+        </button>
+      </div>
+    </form>
   );
 };
 
