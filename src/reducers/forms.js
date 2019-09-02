@@ -15,6 +15,8 @@ const updateFormRequest = createAction('FORMS_UPDATE_REQUEST');
 const updateFormSuccess = createAction('FORMS_UPDATE_SUCCESS');
 const updateFormFailure = createAction('FORMS_UPDATE_FAILURE');
 
+export const resetSuccess = createAction('FORMS_RESET_SUCCESS');
+
 // ASYNC ACTIONS
 export const getForms = () => callApi({
   types: [getFormsRequest, getFormsSuccess, getFormsFailure],
@@ -36,7 +38,8 @@ export const initialState = {
   data: [],
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  success: null,
 };
 
 export default handleActions(
@@ -61,11 +64,12 @@ export default handleActions(
       ...state,
       loading: true,
     }),
-    [addFormSuccess]: (state, { payload }) => ({
+    [addFormSuccess]: (state, { type, payload }) => ({
       ...state,
       data: [...state.data, payload],
       loading: false,
       loaded: true,
+      success: type,
     }),
     [addFormFailure]: (state, { payload }) => ({
       ...state,
@@ -77,7 +81,7 @@ export default handleActions(
       ...state,
       loading: true,
     }),
-    [updateFormSuccess]: (state, { payload }) => ({
+    [updateFormSuccess]: (state, { type, payload }) => ({
       ...state,
       data: state.data.map(form => (
         form._id.$oid !== payload._id.$oid
@@ -86,12 +90,17 @@ export default handleActions(
       )),
       loading: false,
       loaded: true,
+      success: type,
     }),
     [updateFormFailure]: (state, { payload }) => ({
       ...state,
       loading: false,
       error: payload
     }),
+    [resetSuccess]: state => ({
+      ...state,
+      success: null,
+    })
   },
   initialState
 );
@@ -101,6 +110,7 @@ export const formsDataSelector = state => state.forms.data;
 export const formsLoadingSelector = state => state.forms.loading;
 export const formsLoadedSelector = state => state.forms.loaded;
 export const formsErrorSelector = state => state.forms.error;
+export const formsSuccessSelector = state => state.forms.success;
 export const currFormId = (state, props) => props.match.params.id;
 
 export const makeGetCurrForm = () => createSelector(
