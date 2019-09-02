@@ -1,0 +1,27 @@
+@import 'src/assets/styles/variables';
+
+.wrapper-snackbar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.snackbar {
+  width: 300px;
+  max-width: 100%;
+  padding: 15px;
+
+  font-size: 18px;
+  color: $color-light;
+  text-align: center;
+  border-radius: 4px;
+
+  &.is-success {
+    background-color: $color-info-success;
+  }
+
+  &.is-error {
+    background-color: $color-info-error;
+  }
+}
