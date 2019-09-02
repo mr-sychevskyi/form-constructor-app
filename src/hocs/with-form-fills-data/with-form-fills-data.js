@@ -20,7 +20,7 @@ const withFormFillsData = ViewComponent => {
       const { loading, loaded, error } = this.props;
 
       if (error) {
-        return <h3 className="info-title err">{error.message}</h3>;
+        return <h3 className="info-error">{error.message}</h3>;
       }
 
       if (loading) {
