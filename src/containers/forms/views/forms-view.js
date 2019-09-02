@@ -4,14 +4,26 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import './forms-view.scss';
 
-const FormsView = ({ forms, fillsTotalList, currCopiedId, handleCopied }) => (
+const FormsView = ({ forms, filterValue, fillsTotalList, currCopiedId, handleChange, handleCopied }) => (
   <>
     {forms.length === 0
       ? <h2 className="info-default">No forms are available!</h2>
       : (
         <>
           <section className="section forms">
-            <h3 className="section-title">Forms list</h3>
+            <div className="forms-toolbar">
+              <h3 className="section-title">Forms list</h3>
+              <form className="forms-search">
+                <i className="forms-search__icon material-icons">search</i>
+                <input
+                  className="forms-search__input"
+                  type="text"
+                  placeholder="Search"
+                  value={filterValue}
+                  onChange={handleChange}
+                />
+              </form>
+            </div>
             <ul className="forms-list">
               {forms.map(form => {
                 const id = form._id.$oid;
