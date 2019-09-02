@@ -103,7 +103,7 @@ export const formFillsSelector = createSelector(
   [fillsDataSelector, currFormId],
   (fills, id) => {
     const currFormFills = fills.filter(form => form._id.$oid === id);
-    
+
     return currFormFills.length ? currFormFills[0].fills : [];
   }
 );

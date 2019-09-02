@@ -1,10 +1,10 @@
 .progress {
   overflow: hidden;
-  animation: progress 2.5s linear infinite;
+  animation: progress 2s linear infinite;
 }
 
 .progress__inner {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 @keyframes progress {

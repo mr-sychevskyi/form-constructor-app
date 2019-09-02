@@ -1,8 +1,12 @@
+@import 'src/assets/styles/variables';
+
+$body-color: $color-secondary;
+
 body {
-  font-family: 'Lato', 'Roboto', 'Arial', sans-serif;
+  font-family: 'Lato', 'Arial', sans-serif;
   font-size: 16px;
   font-weight: 400;
 
   line-height: normal;
-  color: #000;
+  color: $body-color;
 }

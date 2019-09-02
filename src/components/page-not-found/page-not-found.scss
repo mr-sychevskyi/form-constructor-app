@@ -1,5 +1,8 @@
+@import 'src/assets/styles/variables';
+
 .route-notfound {
-  font-family: 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Avenir Next', 'Helvetica Neue', Lato, Arial, sans-serif;
+  font-size: 32px;
   font-weight: 400;
-  font-style: normal;
+  color: $color-info-error;
 }

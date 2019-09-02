@@ -1,14 +1,21 @@
 @import 'src/assets/styles/variables';
 
-.form-elements {
+$form-constructor-border: $color-primary-light;
+$btn-element-bg: rgba(144, 164, 174, 0.1);
+
+.form-constructor-elements {
+  flex: 0 0 300px;
+  border-right: 2px solid $form-constructor-border;
+
   &-title {
-    font-size: 20px;
-    padding: 20px;
+    padding: 25px 20px;
+    font-size: 18px;
+    font-weight: 700;
   }
 }
 
-.list-item {
-  .btn {
+.form-constructor-elements-list {
+  .btn-element {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -16,28 +23,28 @@
     padding: 20px;
     transition: background-color .3s ease-out;
 
-    &__text {
-      //font-size: 18px;
+    &-info * {
+      line-height: 30px;
+      vertical-align: middle;
+    }
+
+    &-icon {
+      opacity: 0;
+      transition: opacity .3s ease-out;
+    }
+
+    .btn__text {
+      font-size: 16px;
       text-transform: uppercase;
-      color: rgba(0, 0, 0, 0.7);
+      color: $color-secondary;
     }
 
     &:hover {
-      background-color: rgba(144,164,174,0.1);
+      background-color: $btn-element-bg;
 
-      .list-item-icon {
+      .btn-element-icon {
         opacity: 1;
       }
     }
-  }
-
-  &-info * {
-    line-height: 30px;
-    vertical-align: middle;
-  }
-
-  &-icon {
-    opacity: 0;
-    transition: opacity .3s ease-out;
   }
 }
