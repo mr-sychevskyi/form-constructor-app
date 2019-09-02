@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import memoize from 'memoize-one';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import { formsSuccessSelector, resetSuccess } from 'reducers/forms';
@@ -10,7 +11,16 @@ import FormsView from './views/forms-view';
 
 class Forms extends Component {
   state = {
+    filterValue: '',
     currCopiedId: null,
+  };
+
+  filterData = memoize(
+    (list, filterValue) => list.filter(item => item.name.toLowerCase().includes(filterValue.toLowerCase()))
+  );
+
+  handleChange = e => {
+    this.setState({ filterValue: e.target.value });
   };
 
   handleCopied = id => {
@@ -24,14 +34,18 @@ class Forms extends Component {
   };
 
   render() {
-    const { currCopiedId } = this.state;
-    const { success } = this.props;
+    const { filterValue, currCopiedId } = this.state;
+    const { forms, success } = this.props;
+    const filteredList = this.filterData(forms, filterValue);
 
     return (
       <>
         <FormsView
           {...this.props}
+          forms={filteredList}
+          filterValue={filterValue}
           currCopiedId={currCopiedId}
+          handleChange={this.handleChange}
           handleCopied={this.handleCopied}
         />
         <Snackbar
