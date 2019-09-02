@@ -7,11 +7,11 @@ import './forms-view.scss';
 const FormsView = ({ forms, fillsTotalList, currCopiedId, handleCopied }) => (
   <>
     {forms.length === 0
-      ? <h3 className="info-title 1">No forms are available!</h3>
+      ? <h2 className="info-default">No forms are available!</h2>
       : (
         <>
-          <div className="forms">
-            <h3 className="form-title">Forms list</h3>
+          <section className="section forms">
+            <h3 className="section-title">Forms list</h3>
             <ul className="forms-list">
               {forms.map(form => {
                 const id = form._id.$oid;
@@ -19,11 +19,13 @@ const FormsView = ({ forms, fillsTotalList, currCopiedId, handleCopied }) => (
                 return (
                   <li key={id} className="forms-list-item">
                     <div className="form">
-                      <div className="forms-list-info">
-                        <span className="forms-list-text forms-list-name">{form.name}</span>
-                        <span className="forms-list-text forms-list-bx">Fields: {form.fields.length}</span>
-                        <span className="forms-list-text forms-list-bx">
-                          <span>Fills: {fillsTotalList[id] || 0}</span>
+                      <div className="form-info">
+                        <span className="form-name">{form.name}</span>
+                        <span className="form-info-text form-bx">
+                          Fields: <span className="form-info-total">{form.fields.length}</span>
+                        </span>
+                        <span className="form-info-text form-bx">
+                          Fills: <span className="form-info-total">{fillsTotalList[id] || 0}</span>
                         </span>
                         {fillsTotalList[id] && (
                           <Link className="btn btn-link" to={`/fills/${id}`} replace>
@@ -32,9 +34,7 @@ const FormsView = ({ forms, fillsTotalList, currCopiedId, handleCopied }) => (
                         )}
                       </div>
 
-                      <div className="forms-list-controls">
-                        {/* <Link className="forms-list-text" to={`/forms/active/${id}`}>Link to fill</Link> */}
-
+                      <div className="form__controls">
                         {!fillsTotalList[id] && (
                           <Link className="btn btn-link" title="Edit form" to={`/forms/${id}`} replace>
                             <i className="btn__icon material-icons">edit</i>
@@ -58,8 +58,8 @@ const FormsView = ({ forms, fillsTotalList, currCopiedId, handleCopied }) => (
                 );
               })}
             </ul>
-          </div>
-          <Link className="btn form__btn" to="/forms/new">Create form</Link>
+          </section>
+          <Link className="btn btn-primary btn-primary_size_m" to="/forms/new">Create form</Link>
         </>
       )}
   </>
