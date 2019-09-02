@@ -29,9 +29,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   tableBody: {
-    '& td': {
-      whiteSpace: 'nowrap',
-    }
+    '& td': {}
   },
   tablePagination: {
     marginBottom: theme.spacing(1),
