@@ -6,24 +6,28 @@ import './forms-view.scss';
 
 const FormsView = ({ forms, filterValue, fillsTotalList, currCopiedId, handleChange, handleCopied }) => (
   <>
-    {forms.length === 0
-      ? <h2 className="info-default">No forms are available!</h2>
-      : (
-        <>
-          <section className="section forms">
-            <div className="forms-toolbar">
-              <h3 className="section-title">Forms list</h3>
-              <form className="forms-search">
-                <i className="forms-search__icon material-icons">search</i>
-                <input
-                  className="forms-search__input"
-                  type="text"
-                  placeholder="Search"
-                  value={filterValue}
-                  onChange={handleChange}
-                />
-              </form>
+    <section className="section forms">
+      <div className="forms-toolbar">
+        <h3 className="section-title">Forms list</h3>
+        <form className="forms-search">
+          <i className="forms-search__icon material-icons">search</i>
+          <input
+            className="forms-search__input"
+            type="text"
+            placeholder="Search"
+            value={filterValue}
+            onChange={handleChange}
+          />
+        </form>
+      </div>
+      <>
+        {forms.length === 0
+          ? (
+            <div className="d-table">
+              <h2 className="d-table-cell info-default">No forms are available :(</h2>
             </div>
+          )
+          : (
             <ul className="forms-list">
               {forms.map(form => {
                 const id = form._id.$oid;
@@ -70,10 +74,10 @@ const FormsView = ({ forms, filterValue, fillsTotalList, currCopiedId, handleCha
                 );
               })}
             </ul>
-          </section>
-          <Link className="btn btn-primary btn-primary_size_m" to="/forms/new">Create form</Link>
-        </>
-      )}
+          )}
+      </>
+    </section>
+    <Link className="btn btn-primary btn-primary_size_m" to="/forms/new">Create form</Link>
   </>
 );
 
