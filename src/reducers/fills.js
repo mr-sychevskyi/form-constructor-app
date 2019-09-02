@@ -36,7 +36,8 @@ export const initialState = {
   data: [],
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  success: null,
 };
 
 export default handleActions(
@@ -54,18 +55,19 @@ export default handleActions(
     [getFillsFailure]: (state, { payload }) => ({
       ...state,
       loading: false,
-      error: payload.error
+      error: payload
     }),
 
     [addFillRequest]: state => ({
       ...state,
       loading: true,
     }),
-    [addFillSuccess]: (state, { payload }) => ({
+    [addFillSuccess]: (state, { type, payload }) => ({
       ...state,
       data: [...state.data, payload],
       loading: false,
       loaded: true,
+      success: type,
     }),
     [addFillFailure]: (state, { payload }) => ({
       ...state,
@@ -77,16 +79,17 @@ export default handleActions(
       ...state,
       loading: true,
     }),
-    [updateFillSuccess]: (state, { payload }) => ({
+    [updateFillSuccess]: (state, { type, payload }) => ({
       ...state,
       data: [...state.data, payload],
       loading: false,
       loaded: true,
+      success: type,
     }),
     [updateFillFailure]: (state, { payload }) => ({
       ...state,
       loading: false,
-      error: payload.error
+      error: payload
     }),
   },
   initialState
@@ -97,6 +100,7 @@ export const fillsDataSelector = state => state.fills.data;
 export const fillsLoadingSelector = state => state.fills.loading;
 export const fillsLoadedSelector = state => state.fills.loaded;
 export const fillsErrorSelector = state => state.fills.error;
+export const fillsSuccessSelector = state => state.fills.success;
 export const currFormId = (state, props) => props.match.params.id;
 
 export const formFillsSelector = createSelector(
