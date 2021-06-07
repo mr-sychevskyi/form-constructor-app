@@ -16,6 +16,8 @@ const App = () => (
   </Provider>
 );
 
+
+
 const rootElement = document.getElementById('root');
 
 if (rootElement) {
